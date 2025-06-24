@@ -1,0 +1,32 @@
+Extracted from https://github.com/dotnet/runtime/commit/087651ee0c2e315f7fe1cbecab5f507af364ab5c
+--
+diff --git a/mono/tools/offsets-tool/offsets-tool.py b/mono/tools/offsets-tool/offsets-tool.py
+index adf7eb4b..46214429 100644
+--- a/mono/tools/offsets-tool/offsets-tool.py
++++ b/mono/tools/offsets-tool/offsets-tool.py
+@@ -303,8 +303,11 @@ class OffsetsTool:
+ 			if type.size == -1:
+ 				continue
+ 			f.write ("DECL_SIZE2(%s,%s)\n" % (type.name, type.size))
++			done_fields = {}
+ 			for field in type.fields:
+-				f.write ("DECL_OFFSET2(%s,%s,%s)\n" % (type.name, field.name, field.offset))
++				if field.name not in done_fields:
++					f.write ("DECL_OFFSET2(%s,%s,%s)\n" % (type.name, field.name, field.offset))
++					done_fields [field.name] = field.name
+ 		f.write ("#endif //disable metadata check\n")
+ 		
+ 		f.write ("#ifndef DISABLE_JIT_OFFSETS\n")
+@@ -314,8 +317,11 @@ class OffsetsTool:
+ 			if type.size == -1:
+ 				continue
+ 			f.write ("DECL_SIZE2(%s,%s)\n" % (type.name, type.size))
++			done_fields = {}
+ 			for field in type.fields:
+-				f.write ("DECL_OFFSET2(%s,%s,%s)\n" % (type.name, field.name, field.offset))
++				if field.name not in done_fields:
++					f.write ("DECL_OFFSET2(%s,%s,%s)\n" % (type.name, field.name, field.offset))
++					done_fields [field.name] = field.name
+ 		f.write ("#endif //disable jit check\n")
+ 					
+ 		f.write ("#endif //cross compiler checks\n")
