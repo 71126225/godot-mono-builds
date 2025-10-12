@@ -34,12 +34,11 @@ def main(raw_args):
         'wasm_m2n_trampolines_hook.diff',
         'btls-cmake-args-linux-mingw.diff',
         'btls-cmake-arm64.diff',
+        'llvm-osx-regex-conflict.diff',
+        'offsets-tool-extra-cflags.diff',
+        'offsets-tool-newer-clang.diff',
+        'offsets-tool-duplicate-fields.diff',
     ]
-
-    if os.path.isfile(os.path.join(mono_source_root, 'mono/tools/offsets-tool/offsets-tool.py')):
-        patches += ['offsets-tool-extra-cflags_new.diff']
-    else:
-        patches += ['offsets-tool-extra-cflags_old.diff']
 
     from subprocess import Popen
     from sys import exit
