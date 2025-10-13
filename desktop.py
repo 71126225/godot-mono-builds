@@ -231,13 +231,13 @@ def make(opts: DesktopOpts, product: str, target_platform: str, target: str):
         strip_libs(opts, product, target_platform, target)
 
 def copy_bcl(opts: DesktopOpts, product: str, target_platform: str, target: str):
-    from distutils.dir_util import copy_tree
+    from shutil import copytree
     from bcl import get_profile_install_dirs
     dest_dir = path_join(opts.install_dir, '%s-%s-%s' % (product, target, opts.configuration), 'lib/mono/4.5')
     for src_dir in get_profile_install_dirs(opts, 'desktop-win32' if target_platform == 'windows' else 'desktop'):
         if not os.path.isdir(src_dir):
             raise BuildError('BCL source directory does not exist: %s. The BCL must be built prior to this.' % src_dir)
-        copy_tree(src_dir, dest_dir)
+        copytree(src_dir, dest_dir)
 
 def clean(opts: DesktopOpts, product: str, target_platform: str, target: str):
     rm_rf(

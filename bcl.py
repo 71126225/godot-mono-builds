@@ -132,10 +132,10 @@ def make_product(opts: BclOpts, product: str):
         run_command('make', args=test_make_args, name='make tests')
 
     # Copy the bcl profiles to the output directory
-    from distutils.dir_util import copy_tree
+    from shutil import copytree
     for profile in profiles:
         profile_dir = get_profile_dir(profile, product)
-        copy_tree('%s/mcs/class/lib/%s' % (opts.mono_source_root, profile_dir), '%s/%s' % (install_dir, profile_dir))
+        copytree('%s/mcs/class/lib/%s' % (opts.mono_source_root, profile_dir), '%s/%s' % (install_dir, profile_dir))
 
     # Remove unneeded files
     import glob
