@@ -18,11 +18,15 @@ def main(raw_args):
 
     args = parser.parse_args(raw_args)
 
+    this_script_dir = os.path.dirname(os.path.realpath(__file__))
+    patches_dir = os.path.join(this_script_dir, 'files', 'patches')
+
     mono_source_root = args.mono_sources
     emsdk_root = get_emsdk_root()
 
     patches = [
         '%s/sdks/builds/fix-emscripten-8511.diff' % mono_source_root,
+        '%s/emscripten-python-3.12.diff' % patches_dir,
     ]
 
     from subprocess import Popen
